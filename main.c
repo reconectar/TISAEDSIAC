@@ -11,22 +11,19 @@
 
 int cbd(){
     int n,i=0,erro=0,soma=0;
-    float vDN;
     printf("\nInsira o número na base 2 a ser convertido para base 10: ");
-    scanf("%f", &vDN);
+    scanf("%d", &n);
     //Separanto a parte inteira de decimal nas duas linhas abaixo
-    n = vDN;
-    vDN = vDN - n;
-    //Tratamento da parte inteira:
     while(n!=0){
         soma=soma+(n%10)*pow(2,i);
-        if(((n%10)!=1)&&((n%10)!=0)){
+        if(((n%10)!=1)&&((n%10)!=0)&&((n%10)!=-1)){
             erro = 1;
             n = 0;
         }
         n=n/10;
         i++;
     }
+
     if(erro==1){
         printf("\nErro! Número inválido!\n");
     }else{
