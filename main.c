@@ -4,18 +4,18 @@
 #include <locale.h>
 
 /* Arthur Gramiscelli Branco
-   Rajha
-   Felipe
+   Rajha Fajardo de Alencar Marçal
+   Felipe Carvalho de Melo
 
-   Engenharia de Software/manhã - 1Periodo/2semestre/2018 */
+   Engenharia de Software/manhã - 1º Período/2ºsemestre/2018 */
 
 int cbd(){
     int n,i=0,erro=0,soma=0;
-    printf("\nInsira o número na base 2 a ser convertido para base 10: ");
+    printf("\n Insira o número na base 2 a ser convertido para base 10: ");
     scanf("%d", &n);
-    //Separanto a parte inteira de decimal nas duas linhas abaixo
+    //Separando a parte inteira de decimal nas duas linhas abaixo
     while(n!=0){
-        soma=soma+(n%10)*pow(2,i);
+        soma=soma+(n%10)*pow(2,i); //Usamos a função resto para "quebrar" o número inserido e prosseguir com o cálculo com cada número//
         if(((n%10)!=1)&&((n%10)!=0)&&((n%10)!=-1)){
             erro = 1;
             n = 0;
@@ -25,9 +25,9 @@ int cbd(){
     }
 
     if(erro==1){
-        printf("\nErro! Número inválido!\n");
+        printf("\n Erro! Número inválido!\n");
     }else{
-        printf("\nO equivalente em decimal é %d\n", soma);
+        printf("\n O equivalente em decimal é: %d\n", soma);
     }
     return 0;
 }
@@ -36,9 +36,9 @@ int cdb(){
     int n,r[255];
     float vDN;
     int i=0;
-    printf("\nInsira o numero na base 10 a ser convertido para base 2: ");
+    printf("\n Insira o número na base 10 a ser convertido para base 2: ");
     scanf("%f", &vDN);
-    //Separanto a parte inteira de decimal nas duas linhas abaixo
+    //Separando a parte inteira de decimal nas duas linhas abaixo
     n=vDN;
     vDN=vDN-n;
     //Tratamento da parte inteira:
@@ -48,15 +48,15 @@ int cdb(){
         i++;
     }
     r[i]=n%2;
-    printf("\nO equivalente em binário é:" );
+    printf("\n O equivalente em binário é: " );
     for(i=i;i>=0;i--){
         printf("%d",r[i]);
     }
-    printf(","); //Coisa linda de deus pra separar o inteiro da parte decimal
+    printf(","); //Separar o inteiro da parte decimal
 
     //Tratamento da parte decimal:
 
-    while(i<4){ //esse i vai ajudar a pegar 5 casa de precisão imprimindo 5 vezes até o while sair
+    while(i<4){ //Esse i vai ajudar a pegar 5 casa de precisão imprimindo 5 vezes até o while sair
         if(vDN<1.0){
             printf("0");
             vDN=vDN*2;
@@ -75,8 +75,8 @@ int cdb(){
 int chd(){
     int i=0,j=0,erro=0,soma=0,aux[255];
     char hex[255];
-    printf("\nInsira o numero na base 16 a ser convertido para base 10: ");
-    fflush (stdin); //Linha pra desbugar o fgets (ele nao pede entrada pro usuario caso nao tenha isso)
+    printf("\n Insira o número na base 16 a ser convertido para base 10: ");
+    fflush (stdin); //Linha pra desbugar o fgets (ele não pede entrada pro usuário caso não tenha isso)
     fgets(hex, 255, stdin);
     //Tratamento da parte inteira:
     while (hex[i] != '\n'){
@@ -136,7 +136,7 @@ int chd(){
                 aux[i]=15;
                 break;
             default:
-                printf("\nErro! Algo inserido é inválido!\n");
+                printf("\n Erro! Algo inserido é inválido!\n");
                 erro=1; //Vai ser usado abaixo para decidir se vai ser impresso as contas feitas em um if
             }
         i++;
@@ -147,7 +147,7 @@ int chd(){
         j++;
     }
     if(erro!=1){
-        printf("\nO equivalente em decimal é %d\n", soma);
+        printf("\n O equivalente em decimal é: %d\n", soma);
     }
     return 0;
 }
@@ -156,9 +156,9 @@ int cdh(){
     int n,r[255];
     float vDN;
     int i=0;
-    printf("\nInsira o numero na base 10 a ser convertido para base 16: ");
+    printf("\n Insira o número na base 10 a ser convertido para base 16: ");
     scanf("%f", &vDN);
-    //Separanto a parte inteira de decimal nas duas linhas abaixo
+    //Separando a parte inteira de decimal nas duas linhas abaixo
     n=vDN;
     vDN=vDN-n;
     //Tratamento da parte inteira:
@@ -168,7 +168,7 @@ int cdh(){
         i++;
     }
     r[i]=n%16;
-    printf("\nO equivalente em hexadecimal é: ");
+    printf("\n O equivalente em hexadecimal é: ");
     for(i=i;i>=0;i--){
         switch (r[i]){
             case 10:
@@ -193,7 +193,7 @@ int cdh(){
                 printf("%d",r[i]);
         }
     }
-    printf(","); //Coisa linda de deus pra separar o inteiro da parte decimal
+    printf(","); //Separar o inteiro da parte decimal
 
     //Tratamento da parte decimal:
 
@@ -232,11 +232,14 @@ int cdh(){
 int menu(){
     //Nosso lindo menu
     int n;
-    printf("\n1. Calculo de binario para decimal");
-    printf("\n2. Calculo de decimal para binario");
-    printf("\n3. Calculo de hexadecimal para decimal");
-    printf("\n4. Calculo de decimal para hexadecimal");
-    printf("\n\nInsira o numero da operação que deseja: ");
+    printf("\n---------Escolha uma operação----------\n");
+    printf("---------------------------------------\n");
+    printf("\n 1. Cálculo de binário para decimal");
+    printf("\n 2. Cálculo de decimal para binário");
+    printf("\n 3. Cálculo de hexadecimal para decimal");
+    printf("\n 4. Cálculo de decimal para hexadecimal \n");
+    printf("\n---------------------------------------\n");
+    printf("\n\n Insira o número da operação que deseja: ");
     scanf("%d",&n);
     system("cls");
 
@@ -253,9 +256,11 @@ int menu(){
         case 4:
             cdh();
             break;
-        //Coloquei o erro no default, caso alguem digite fora de 1 até 4
+        //Erro no default, caso alguém digite fora de 1 até 4
         default:
-            printf("\nInsira um numero válido\n");
+            printf("---------------------------------------\n");
+            printf("Insira um número válido!\n");
+            printf("---------------------------------------\n\n");
             system("pause");
             system("cls");
             menu();
@@ -269,15 +274,19 @@ int main(){
     menu();
     //Repetição do menu dentro do main a seguir:
     while(n!=2){
-        printf("\n\n\nDeseja executar outro programa?");
+        printf("\n\n\n Deseja executar outro programa?");
+        printf("\n---------------------------------------\n");
         printf("\n1.Sim");
         printf("\n2.Nao\n");
+        printf("\nResposta: ");
         scanf("%d",&n);
         system("cls");
         if(n==1){
-            menu(); //Disparo da repetição caso o usuario selecione 1
+            menu(); //Disparo da repetição caso o usuário selecione 1
         }else{
-            printf("\nFim do programa"); //Saida do programa (return 0)
+            printf("---------------------------------------\n");
+            printf("Fim do programa."); //Saída do programa (return 0)
+            printf("\n---------------------------------------\n");
             return 0;
         }
     }
