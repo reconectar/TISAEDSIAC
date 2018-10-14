@@ -355,7 +355,7 @@ int menu(){
             system("cls");
             menu();
     }
-
+    return 0;
 }
 
 int main(){
