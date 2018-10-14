@@ -10,10 +10,14 @@
    Engenharia de Software/manhã - 1º Período/2ºsemestre/2018 */
 
 int cbd(){
-    int n,i=0,erro=0,soma=0;
+    int n, i=0 ,erro=0;
+    float vDN, soma=0;
     printf("\n Insira o número na base 2 a ser convertido para base 10: ");
-    scanf("%d", &n);
+    scanf("%f", &vDN);
     //Separando a parte inteira de decimal nas duas linhas abaixo
+    n=vDN;
+    vDN=vDN-n+0.00005; //+0.00005 pra concertar um erro de subtracao de float - inteiro la na frente
+    //Tratamento da parte inteira:
     while(n!=0){
         soma=soma+(n%10)*pow(2,i); //Usamos a função resto para "quebrar" o número inserido e prosseguir com o cálculo com cada número//
         if(((n%10)!=1)&&((n%10)!=0)&&((n%10)!=-1)){
@@ -23,11 +27,19 @@ int cbd(){
         n=n/10;
         i++;
     }
-
+    //Tratamento da parte decimal:
+    i = 0;
+    while(i!=-4){ //Precisao de 4 operacoes
+        i--;
+        vDN=(vDN*10);
+        n=vDN;
+        vDN=vDN-n;
+        soma=soma+(n%10)*pow(2,i);
+    }
     if(erro==1){
         printf("\n Erro! Número inválido!\n");
     }else{
-        printf("\n O equivalente em decimal é: %d\n", soma);
+        printf("\n O equivalente em decimal é: %.4f\n", soma);
     }
     return 0;
 }
@@ -73,8 +85,9 @@ int cdb(){
 }
 
 int chd(){
-    int i=0,j=0,erro=0,soma=0,aux[255];
-    char hex[255];
+    int i=0,j=0,k=0,c=0,erro=0,aux[50],auxd[100];
+    char hex[50];
+    float soma=0;
     printf("\n Insira o número na base 16 a ser convertido para base 10: ");
     fflush (stdin); //Linha pra desbugar o fgets (ele não pede entrada pro usuário caso não tenha isso)
     fgets(hex, 255, stdin);
@@ -135,19 +148,93 @@ int chd(){
             case 'F':
                 aux[i]=15;
                 break;
+            case ',': //(codigo novo) Tratamento da parte decimal:
+                hex[i]='\n';
+                j=i+1; //desconsiderando a casa da virgula para iniciar o tratamento novo (parte decimal)
+                k=j; //usado para andar no vetor mais tarde
+                i--; //desconsiderando a casa da virgula para voltar ao tratamento antigo (parte inteira)
+                while (hex[j] != '\n'){
+                    switch (hex[j]){
+                        case '0':
+                            auxd[j]=0;
+                            break;
+                        case '1':
+                            auxd[j]=1;
+                            break;
+                        case '2':
+                            auxd[j]=2;
+                            break;
+                        case '3':
+                            auxd[j]=3;
+                            break;
+                        case '4':
+                            auxd[j]=4;
+                            break;
+                        case '5':
+                            auxd[j]=5;
+                            break;
+                        case '6':
+                            auxd[j]=6;
+                            break;
+                        case '7':
+                            auxd[j]=7;
+                            break;
+                        case '8':
+                            auxd[j]=8;
+                            break;
+                        case '9':
+                            auxd[j]=9;
+                            break;
+                        case 'a':
+                        case 'A':
+                            auxd[j]=10;
+                            break;
+                        case 'b':
+                        case 'B':
+                            auxd[j]=11;
+                            break;
+                        case 'c':
+                        case 'C':
+                            auxd[j]=12;
+                            break;
+                        case 'd':
+                        case 'D':
+                            auxd[j]=13;
+                            break;
+                        case 'e':
+                        case 'E':
+                            auxd[j]=14;
+                            break;
+                        case 'f':
+                        case 'F':
+                            auxd[j]=15;
+                            break;
+                        default:
+                            printf("\n Erro! Algo inserido é inválido!\n");
+                            erro=1; //Vai ser usado abaixo para decidir se vai ser impresso as contas feitas em um if
+                    }
+                j++;
+                }
+                j--; //Desconsiderando o /n no final
+                break;
             default:
                 printf("\n Erro! Algo inserido é inválido!\n");
                 erro=1; //Vai ser usado abaixo para decidir se vai ser impresso as contas feitas em um if
             }
         i++;
     }
-    i--;
-    for(i=i;i>=0;i--){
-        soma=soma+pow(16,i)*aux[j];
-        j++;
+    i--; //Desconsiderando o /n no final
+    for(k=k;k<=j;k++){ //For da parte decimal
+        c--;
+        soma=soma+pow(16,c)*auxd[k];
+    }
+    k=0; //Resetando o k para o tratamento da parte inteira
+    for(i=i;i>=0;i--){ //For da parte inteira
+        soma=soma+pow(16,i)*aux[k];
+        k++;
     }
     if(erro!=1){
-        printf("\n O equivalente em decimal é: %d\n", soma);
+        printf("\n O equivalente em decimal é: %.4f\n", soma);
     }
     return 0;
 }
@@ -237,7 +324,8 @@ int menu(){
     printf("\n 1. Cálculo de binário para decimal");
     printf("\n 2. Cálculo de decimal para binário");
     printf("\n 3. Cálculo de hexadecimal para decimal");
-    printf("\n 4. Cálculo de decimal para hexadecimal \n");
+    printf("\n 4. Cálculo de decimal para hexadecimal");
+    printf("\n 5. Sair \n");
     printf("\n---------------------------------------\n");
     printf("\n\n Insira o número da operação que deseja: ");
     scanf("%d",&n);
@@ -256,7 +344,9 @@ int menu(){
         case 4:
             cdh();
             break;
-        //Erro no default, caso alguém digite fora de 1 até 4
+        case 5:
+            return 0;
+        //Erro no default, caso alguém digite fora de 1 até 5
         default:
             printf("---------------------------------------\n");
             printf("Insira um número válido!\n");
@@ -265,7 +355,7 @@ int menu(){
             system("cls");
             menu();
     }
-    return 0;
+
 }
 
 int main(){
